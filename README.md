@@ -73,7 +73,7 @@ In November 2014, Policy C fitted a challenger and the gate **rejected** it. The
 
 ### Compute
 
-Retraining on every feature-drift alert (counterfactual A\*) would have fitted 27 challengers on 13.3M cumulative training rows. Policy C fitted four challengers on 2.25M rows, **83% less**. Policy B's figure is 82%.
+Retraining on every feature-drift alert (counterfactual A\*) would have fitted 27 challengers on 13.3M cumulative training rows. Policy C fitted four challengers and one recalibration on 2.40M rows in total, **82% less** (83% counting challenger fits only). Policy B's figure is also 82%.
 
 ![Candidate training row exposure](docs/figures/candidate_row_exposure.png)
 
