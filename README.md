@@ -1,6 +1,6 @@
 # Drift-aware credit-risk monitoring under delayed labels
 
-[![ci](https://github.com/SHR-IM/drift-aware-credit-risk-mlops/actions/workflows/ci.yml/badge.svg)](https://github.com/SHR-IM/drift-aware-credit-risk-mlops/actions/workflows/ci.yml)
+[![ci](https://github.com/saharimani/drift-aware-credit-risk-mlops/actions/workflows/ci.yml/badge.svg)](https://github.com/saharimani/drift-aware-credit-risk-mlops/actions/workflows/ci.yml)
 
 **When should a deployed credit-risk model be recalibrated or replaced, if the outcomes that prove it has degraded arrive months later?**
 
