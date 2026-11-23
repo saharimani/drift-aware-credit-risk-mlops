@@ -1,0 +1,5 @@
+policy,decision_month,trigger_monitor_month,champion_id,action_type,in_stream_decision,validation_start_month,validation_end_month,first_cohort_scored,n_scored_cohorts,n_scored_rows,in_stream,sufficient_followup
+policy_c_governed_multi_signal,2015-04,2014-11,recalibrated_at_2015-04,recalibration,True,2014-09,2014-11,2015-05,7,242096,True,True
+policy_c_governed_multi_signal,2015-11,2015-06,challenger_at_2015-11,challenger,True,2015-04,2015-06,2015-12,6,226466,True,True
+policy_c_governed_multi_signal,2016-05,2015-12,challenger_at_2016-05,challenger,True,2015-10,2015-12,2016-06,7,217945,True,True
+policy_c_governed_multi_signal,2017-01,2016-08,challenger_at_2017-01,challenger,False,2016-06,2016-08,none,0,0,False,False

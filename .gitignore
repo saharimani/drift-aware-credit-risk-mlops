@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Data and model artefacts live in Cloud Storage, never in git
+data/
+*.parquet
+*.joblib
+*.gzip
+*.tar.gz
+
+# Local configuration with real project identifiers
+config/*.local.json
+.env

@@ -1,0 +1,19 @@
+# Scientific stack pinned to the kernel that produced the final Notebook 05 results.
+# Version drift in xgboost, numpy or scikit-learn is the main parity risk:
+# the November 2014 gate decision is marginal enough to flip on it.
+pandas==3.0.3
+numpy==2.4.3
+scipy==1.17.1
+scikit-learn==1.8.0
+xgboost==3.2.0
+joblib==1.5.3
+pyarrow==24.0.0
+
+# ---------------------------------------------------------------------------
+# GOOGLE CLOUD CLIENTS: pinned. These touch no research computation, so they
+# are safe to fix here and should not be changed to match the notebook kernel.
+# ---------------------------------------------------------------------------
+google-cloud-bigquery==3.27.0
+google-cloud-bigquery-storage==2.27.0
+google-cloud-storage==2.18.2
+db-dtypes==1.3.1

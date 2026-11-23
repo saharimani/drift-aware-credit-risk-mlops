@@ -1,0 +1,23 @@
+[project]
+name = "drift-aware-credit-risk-mlops"
+version = "1.0.0"
+description = "Governed drift-aware intervention policy for a credit-risk model under delayed labels, replayed on Google Cloud"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+extend-exclude = ["notebooks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B"]
+ignore = ["E501", "E741"]
+
+[tool.ruff.lint.per-file-ignores]
+# src/ and the deployment scripts are kept byte-identical to the validated
+# Cloud Run image (see SHA256SUMS.txt), so their unused imports are left in place.
+"src/*" = ["F401"]
+"scripts/run_parity_check.py" = ["F401"]

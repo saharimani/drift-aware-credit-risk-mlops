@@ -1,0 +1,4 @@
+reference_policy,candidate_policy,block_months,metric,candidate_disadvantage,ci_low_95,ci_high_95,noninferiority_margin,practically_noninferior
+policy_D,policy_C,3,brier_score,0.0004132387973308651,6.156843615894569e-05,0.0008617932623477772,0.001,True
+policy_D,policy_C,3,absolute_calibration_gap,0.00044591810890215927,-0.0004983929898703767,0.0013212444625820055,0.003,True
+policy_D,policy_C,3,roc_auc,0.002259557441088004,0.0004227133946190607,0.0048327632998409085,0.01,True

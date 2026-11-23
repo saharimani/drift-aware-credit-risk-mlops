@@ -1,0 +1,15 @@
+Measure,Value
+Main replay executions,41
+Scoring executions,36
+Tail executions (no new scoring),5
+Duplicate-run records excluded,2
+Total wall-clock runtime (s),1625.40
+Mean wall-clock runtime (s),39.64
+Median wall-clock runtime (s),38.60
+Total recorded monitoring time (s),493.98
+Total recorded candidate-fit time (s),77.90
+Cloud Run CPU allocation,4 vCPU
+Cloud Run memory allocation,16 GiB
+vCPU-hour allocation proxy,1.806
+GiB-hour allocation proxy,7.224
+Monetary cost,not calculated — no validated billing export in the evidence bundle

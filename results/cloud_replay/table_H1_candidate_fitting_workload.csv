@@ -1,0 +1,6 @@
+Policy,Feature-drift requests,Candidate evaluations,Candidate fits,Challenger fits,Recalibrations,Challenger row exposure,Status of evidence
+A,33,0,0,0,0,0,"Observed, request stage only — no candidate was fitted"
+A*,33,,27,27,0,13313934,"COUNTERFACTUAL — reconstructed workload, never executed"
+B,33,5,5,5,0,2345879,Observed offline
+C,,5,5,4,1,2246957,Observed offline and replayed on Cloud Run
+D,,6,6,6,0,3238783,Observed offline

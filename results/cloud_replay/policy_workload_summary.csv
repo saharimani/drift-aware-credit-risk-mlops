@@ -1,0 +1,6 @@
+policy,evidence,raw_feature_drift_triggers,candidate_evaluations,candidate_fits,challenger_fits,recalibrations,candidate_training_row_exposure,challenger_training_row_exposure,promotions_total,promotions_in_stream,cloud_runtime_measured
+Policy A,observed (request stage only),33.0,0.0,0,0,0,0,0,0.0,0.0,no
+Policy A*,counterfactual (never executed),33.0,,27,27,0,13313934,13313934,,,no
+Policy B,observed,33.0,5.0,5,5,0,2345879,2345879,5.0,5.0,no
+Policy C,observed,,5.0,5,4,1,2397836,2246957,4.0,3.0,yes (Policy C replay)
+Policy D,observed,,6.0,6,6,0,3238783,3238783,4.0,4.0,no

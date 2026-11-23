@@ -1,0 +1,202 @@
+{
+  "notebook": "05_multi_signal_retraining_policy_and_champion_challenger",
+  "policy_engine": "closed-loop calendar-month simulation: each cohort is scored by the champion active at the start of that month, deployed probabilities are frozen, and delayed evidence is computed from those probabilities against the reference of the champion that issued them",
+  "label_delay_months": 5,
+  "validation_window_months": 3,
+  "deployment_cooldown_months": 6,
+  "candidate_evaluation_holdoff_months": 2,
+  "persistence_cohorts": 2,
+  "deployment_gates": {
+    "primary": {
+      "name": "primary",
+      "challenger_brier_improvement_min": 0.0005,
+      "challenger_calibration_gap_improvement_min": 0.002,
+      "recalibration_brier_tolerance": 0.0002,
+      "recalibration_calibration_gap_improvement_min": 0.002,
+      "log_loss_tolerance": 0.001,
+      "auc_drop_guardrail": 0.01,
+      "min_validation_rows": 10000
+    },
+    "permissive": {
+      "name": "permissive",
+      "challenger_brier_improvement_min": 1e-12,
+      "challenger_calibration_gap_improvement_min": 1e-12,
+      "recalibration_brier_tolerance": 0.001,
+      "recalibration_calibration_gap_improvement_min": 1e-12,
+      "log_loss_tolerance": 0.001,
+      "auc_drop_guardrail": 0.01,
+      "min_validation_rows": 10000
+    },
+    "strict": {
+      "name": "strict",
+      "challenger_brier_improvement_min": 0.001,
+      "challenger_calibration_gap_improvement_min": 0.005,
+      "recalibration_brier_tolerance": 0.0,
+      "recalibration_calibration_gap_improvement_min": 0.005,
+      "log_loss_tolerance": 0.001,
+      "auc_drop_guardrail": 0.01,
+      "min_validation_rows": 10000
+    }
+  },
+  "practical_noninferiority_margins": {
+    "brier_score": 0.001,
+    "absolute_calibration_gap": 0.003,
+    "roc_auc": 0.01
+  },
+  "bootstrap_reporting": {
+    "resamples": 500,
+    "primary_moving_block_months": 3,
+    "block_lengths_tested": [
+      2,
+      3,
+      6
+    ],
+    "policy_c_vs_b_stable_across_block_lengths": false,
+    "policy_c_vs_d_stable_across_block_lengths": true,
+    "policy_c_vs_b_block_length_failures": [
+      {
+        "metric": "brier_score",
+        "block_months": 6,
+        "ci_high_95": 0.001163661619745088,
+        "noninferiority_margin": 0.001
+      }
+    ],
+    "block_length_qualification": "Under 6-month blocks non-inferiority still held for absolute_calibration_gap and roc_auc, but narrowly failed for brier_score at 6-month blocks, where the upper bound was 0.00116 against a margin of 0.001, so that conclusion is specification-dependent."
+  },
+  "action_fork_thresholds": {
+    "auc_drop_fork_threshold": 0.02,
+    "calibration_slope_deviation": 0.15,
+    "residual_bin_shift_threshold": 0.01
+  },
+  "policy_c_trigger_rules": {
+    "R1": "delayed performance deterioration high",
+    "R2": "performance at least moderate AND (score-conditional level high OR residual bin shift at or above threshold)",
+    "R3": "performance at least moderate persisting for at least two consecutive mature cohorts of the same champion AND corroborated by target drift, residual deterioration or an earlier warning for those cohorts",
+    "never_alone": "feature drift, prediction drift, target drift, data quality"
+  },
+  "policy_d": {
+    "purpose": "diagnostic control for the calendar confound: feature drift fires in almost every month, so Policy B may be timed by its cooldown rather than by its trigger",
+    "schedule_rule": "fixed 6-month calendar from the first eligible month",
+    "calendar_interval_months": 6,
+    "first_eligible_month_rule": "earliest decision month with a non-empty chronological training window and a complete validation window under the same label delay; no monitoring signal and no observed promotion date is consulted",
+    "first_eligible_month": "2014-09",
+    "calendar_schedule": [
+      "2014-09",
+      "2015-03",
+      "2015-09",
+      "2016-03",
+      "2016-09",
+      "2017-03"
+    ],
+    "candidate_type": "full challenger, identical to Policy B",
+    "gate": "primary",
+    "deployment_cooldown_months": 0,
+    "candidate_evaluation_holdoff_months": 0,
+    "timing_rule_note": "the calendar sets the cadence, so the cooldown and hold-off are disabled to avoid a second timing rule altering the declared schedule"
+  },
+  "parity_check_passed": true,
+  "sensitivity_families": [
+    "deployment_cooldown_months",
+    "deployment_gate",
+    "label_delay_months",
+    "platform_policy_feature"
+  ],
+  "sensitivity_settings": {
+    "deployment_cooldown_months": [
+      "3",
+      "6",
+      "9"
+    ],
+    "deployment_gate": [
+      "permissive",
+      "primary",
+      "strict"
+    ],
+    "label_delay_months": [
+      "3",
+      "5",
+      "9"
+    ],
+    "platform_policy_feature": [
+      "all_features",
+      "excl_initial_list_status"
+    ]
+  },
+  "statistical_summary_files": [
+    "policy_B_vs_C_bootstrap.csv",
+    "policy_B_vs_D_bootstrap.csv",
+    "static_versus_governed_bootstrap.csv",
+    "policy_C_noninferiority_summary.csv",
+    "policy_C_vs_D_noninferiority_summary.csv",
+    "bootstrap_block_length_summary.csv",
+    "policy_C_vs_D_block_length_summary.csv",
+    "policy_B_vs_D_calendar_offset.csv",
+    "promoted_reference_optimism.csv"
+  ],
+  "results": {
+    "policy_a_requests": 33,
+    "policy_a_requests_without_delayed_deterioration": 6,
+    "policy_b_candidate_triggers": 33,
+    "policy_b_candidate_fits": 5,
+    "policy_b_promotions_in_stream": 5,
+    "policy_b_promotions_tail": 0,
+    "policy_b_champion_active_at_stream_end": "challenger_at_2016-10",
+    "policy_c_candidate_triggers": 5,
+    "policy_c_candidate_fits": 5,
+    "policy_c_promotions_in_stream": 3,
+    "policy_c_promotions_tail": 1,
+    "policy_c_champion_active_at_stream_end": "challenger_at_2016-05",
+    "policy_d_scheduled_evaluations": 6,
+    "policy_d_candidate_fits": 6,
+    "policy_d_promotions_in_stream": 4,
+    "policy_d_promotions_tail": 0,
+    "policy_d_champion_active_at_stream_end": "challenger_at_2016-09",
+    "calendar_similarity": {
+      "paired_in_stream_evaluations": 5,
+      "evaluation_months_identical": false,
+      "evaluation_offset_months_observed": [
+        1
+      ],
+      "common_evaluation_offset_months": 1,
+      "policy_b_promotion_months": [
+        "2014-10",
+        "2015-04",
+        "2015-10",
+        "2016-04",
+        "2016-10"
+      ],
+      "policy_d_promotion_months": [
+        "2015-03",
+        "2015-09",
+        "2016-03",
+        "2016-09"
+      ],
+      "promotion_count_identical": false,
+      "mean_brier_difference_b_minus_d": -0.0001396793099268656,
+      "mean_calibration_gap_difference_b_minus_d": -0.0002647970095221719,
+      "mean_roc_auc_difference_b_minus_d": 0.0007150253711434296,
+      "months_with_same_deployed_generation": 14
+    },
+    "evaluation_schedule_offset_months": 1,
+    "policy_b_vs_d_any_interval_excludes_zero": true,
+    "static_versus_governed_intervals_excluding_zero": 12,
+    "policy_c_noninferior_to_b_primary_blocks": true,
+    "policy_c_noninferior_to_d_primary_blocks": true,
+    "reference_optimism_median_brier_change": 0.003664318127002228,
+    "reference_optimism_median_auc_drop": 0.001996676590675428,
+    "reference_optimism_negative_auc_drops": 6,
+    "reference_optimism_promotions": 12
+  },
+  "supported_claim": "Over 36 monthly cohorts under a 5-month simulated label delay, the governed multi-signal policy reduced intervention requests from 33 under the naive feature-drift baseline to 5 policy triggers, and reduced in-stream deployments from 5 under the governed feature-drift baseline to 3. It did not reduce candidate fitting: Policy B and Policy C each fitted 5 candidates. Policy C met all 3 declared practical margins relative to Policy B under the primary 3-month moving-block specification and under 2-month blocks. Under 6-month blocks non-inferiority still held for absolute_calibration_gap and roc_auc, but narrowly failed for brier_score at 6-month blocks, where the upper bound was 0.00116 against a margin of 0.001, so that conclusion is specification-dependent. Against the 6-month calendar baseline, non-inferiority held on every metric at every tested block length. Policy B was approximately schedule-like: its 5 in-stream evaluation months fell exactly 1 month after the independently derived 6-month calendar, with differing gate outcomes producing 5 promotions against the calendar baseline's 4. The contribution is selective, delayed-outcome-aware and auditable governance, not predictive superiority and not a demonstrated reduction in retraining cost.",
+  "notes": [
+    "The final gate settings were fixed after diagnostic review of earlier prototypes and were not changed according to the new promotion count.",
+    "Challengers and recalibrations use action-specific acceptance criteria because they serve different purposes.",
+    "All gate, fork, governance and non-inferiority thresholds are transparent study choices, not academic or industry standards.",
+    "The five-month label delay is a simulation device for label latency. Lending Club outcomes mature over 36 or 60-month contractual terms, so the policies received outcome information substantially earlier than a lender would.",
+    "Managed performance is retrospective evaluation from frozen deployed probabilities; labels used in it were not available at decision time.",
+    "Policy C raised fewer alerts than Policy B but fitted the same number of candidates, so no computational saving is claimed.",
+    "A promoted champion's monitoring reference is the validation window that accepted it, so its baseline metrics are selected rather than independent. The measured optimism is mild and is not systematic for ranking.",
+    "Schedule divergence between Policy B and Policy D is measured on paired in-stream evaluation months, never on promotion lists of unequal length.",
+    "Non-inferiority of Policy C relative to Policy B is specification-dependent for Brier score: it holds at 2 and 3-month blocks and narrowly fails at 6-month blocks."
+  ]
+}

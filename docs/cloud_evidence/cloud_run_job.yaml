@@ -1,0 +1,70 @@
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  annotations:
+    run.googleapis.com/client-name: gcloud
+    run.googleapis.com/client-version: 577.0.0
+    run.googleapis.com/creator: REDACTED_EMAIL
+    run.googleapis.com/lastModifier: REDACTED_EMAIL
+    run.googleapis.com/operation-id: REDACTED
+  creationTimestamp: '2026-08-04T22:01:32.039561Z'
+  generation: 1
+  labels:
+    cloud.googleapis.com/location: europe-west2
+    run.googleapis.com/lastUpdatedTime: '2026-08-04T22:01:32.039561Z'
+    run.googleapis.com/satisfiesPzs: 'true'
+  name: monitor-and-decide
+  namespace: 'PROJECT_NUMBER'
+  resourceVersion: REDACTED
+  selfLink: /apis/run.googleapis.com/v1/namespaces/PROJECT_NUMBER/jobs/monitor-and-decide
+  uid: REDACTED
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/client-name: gcloud
+        run.googleapis.com/client-version: 577.0.0
+        run.googleapis.com/execution-environment: gen2
+      labels:
+        client.knative.dev/nonce: fik_cez_ton
+    spec:
+      taskCount: 1
+      template:
+        spec:
+          containers:
+          - env:
+            - name: PROJECT_ID
+              value: YOUR_GCP_PROJECT
+            - name: BUCKET
+              value: YOUR_BUCKET
+            - name: DATASET
+              value: drift_prototype_cloud
+            - name: POLICY_NAME
+              value: policy_c
+            - name: POLICY_VERSION
+              value: v1_primary_gate_delay5_cloud
+            - name: PROTOTYPE_CONFIG
+              value: /app/config/prototype_config_cloud.json
+            - name: JOB_CPU
+              value: '4'
+            - name: JOB_MEMORY
+              value: 16Gi
+            image: europe-west2-docker.pkg.dev/YOUR_GCP_PROJECT/drift-prototype/monitor-and-decide:v1
+            resources:
+              limits:
+                cpu: '4'
+                memory: 16Gi
+          maxRetries: 0
+          serviceAccountName: drift-runner@YOUR_GCP_PROJECT.iam.gserviceaccount.com
+          timeoutSeconds: '7200'
+status:
+  conditions:
+  - status: 'True'
+    type: Ready
+  executionCount: 44
+  latestCreatedExecution:
+    completionStatus: EXECUTION_SUCCEEDED
+    completionTimestamp: '2026-08-04T23:17:31.604601Z'
+    creationTimestamp: '2026-08-04T23:17:02.209985Z'
+    name: monitor-and-decide-jjrqs
+  observedGeneration: 1
